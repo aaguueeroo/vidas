@@ -1,0 +1,82 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class AppThemes {
+  static const Map<String, Color> _aestheticColors = {
+    'primary': Color(0xFFD2BA9E),
+    'primaryContainer': Color(0xFFEEEADE),
+    'onPrimary': Color(0xFF2D1F55),
+
+    'secondary': Color(0xFFB9928B),
+    'secondaryContainer': Color(0xFFD6A698),
+    'onSecondary': Color(0xFFFEFEFE),
+
+    'tertiary': Color(0xFF2D1F55),
+    'onTertiary': Color(0xFFFEFEFE),
+
+    'background': Color(0xFFFEFEFE),
+    'onBackground': Color(0xFF2D1F55),
+
+    'surface': Color(0xFFFAF7EF),
+    'surfaceVariant': Color(0xFFFEFEFE),
+    'onSurface': Color(0xFF2D1F55),
+
+    'error': Colors.red,
+    'onError': Colors.black,
+  };
+
+  static TextStyle _aestheticTextStyle = GoogleFonts.lora(
+    fontSize: 16,
+    fontWeight: FontWeight.normal,
+    letterSpacing: 0.15,
+    color: Colors.black,
+  );
+
+  final ThemeData aestheticTheme = ThemeData(
+    colorScheme: ColorScheme(
+      brightness: Brightness.light,
+      primary: _aestheticColors['primary']!,
+      primaryContainer: _aestheticColors['primaryContainer']!,
+      onPrimary: _aestheticColors['onPrimary']!,
+      secondary: _aestheticColors['secondary']!,
+      secondaryContainer: _aestheticColors['secondaryContainer']!,
+      onSecondary: _aestheticColors['onSecondary']!,
+      tertiary: _aestheticColors['tertiary']!,
+      onTertiary: _aestheticColors['onTertiary']!,
+      background: _aestheticColors['background']!,
+      onBackground: _aestheticColors['onBackground']!,
+      surface: _aestheticColors['surface']!,
+      surfaceVariant: _aestheticColors['surfaceVariant']!,
+      onSurface: _aestheticColors['onSurface']!,
+      error: _aestheticColors['error']!,
+      onError: _aestheticColors['onError']!,
+    ),
+
+    textTheme: TextTheme(
+      headlineMedium: _aestheticTextStyle.copyWith(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: _aestheticColors['onBackground']!,
+      ),
+      headlineSmall: _aestheticTextStyle.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['onBackground']!,
+      ),
+      bodyLarge: _aestheticTextStyle.copyWith(
+        fontSize: 25,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['onBackground']!,
+      ),
+      bodyMedium: _aestheticTextStyle.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['background']!,
+      ),
+
+    ),
+
+
+  );
+
+}
