@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unavida/view/widgets/bottom_navigation_bar_view.dart';
+
+import 'app_themes.dart';
+import 'model/vida.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => Vida.newGame(
+          name: 'Jorge',
+          lastName: 'García',
+        ),
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -9,9 +24,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      title: 'Unavida',
+      theme: AppThemes().aestheticTheme,
+      home: BottomNavigationBarView(),
+    );
   }
 }
-
-
-
