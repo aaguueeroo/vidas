@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:unavida/view/vida_view/vida_controller.dart';
 
 class UpperInformation extends StatelessWidget {
   const UpperInformation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    VidaController controller = Provider.of<VidaController>(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -37,7 +41,7 @@ class UpperInformation extends StatelessWidget {
               constraints: const BoxConstraints(),
               icon: const Icon(Icons.settings_outlined, size: 30,),
               color: Theme.of(context).colorScheme.onSecondary,
-              onPressed: () {},
+              onPressed: () => controller.openOptions(context),
             ),
           ],
         ),

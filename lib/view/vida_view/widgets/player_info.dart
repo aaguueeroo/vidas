@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../widgets/light_container.dart';
+import '../vida_controller.dart';
 
 class PlayerInfo extends StatelessWidget {
   final String fullName;
@@ -16,8 +17,21 @@ class PlayerInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle? nameTextStyle = Theme.of(context).textTheme.headlineMedium;
-    TextStyle? textStyle = Theme.of(context).textTheme.headlineSmall;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    VidaController controller = Provider.of<VidaController>(context);
+
+    TextStyle? nameTextStyle = width < 800
+        ? height < 800
+            ? Theme.of(context).textTheme.headlineSmall
+            : Theme.of(context).textTheme.headlineMedium
+        : Theme.of(context).textTheme.headlineLarge;
+    TextStyle? textStyle = width < 800
+        ? Theme.of(context).textTheme.headlineSmall
+        : Theme.of(context)
+            .textTheme
+            .headlineMedium
+            ?.copyWith(fontWeight: FontWeight.normal);
 
     return Row(
       children: [
@@ -27,13 +41,19 @@ class PlayerInfo extends StatelessWidget {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(10),
             child: FittedBox(
-              fit: BoxFit.contain,
-              child: Icon(
-                Icons.person,
-                size: 100,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
+                fit: BoxFit.contain,
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.matrix([
+                    0.2126 + 0.7874 * 0.2, 0.7152 - 0.7152 * 0.2, 0.0722 - 0.0722 * 0.2, 0, 0,
+                    0.2126 - 0.2126 * 0.2, 0.7152 + 0.2848 * 0.2, 0.0722 - 0.0722 * 0.2, 0, 0,
+                    0.2126 - 0.2126 * 0.2, 0.7152 - 0.7152 * 0.2, 0.0722 + 0.9278 * 0.2, 0, 0,
+                    0,                    0,                    0,                    1, 0,
+                  ]),
+                  child: Image.asset(
+                    controller.avatar,
+                    height: 150,
+                  ),
+                )),
           ),
         ),
         Spacer(),

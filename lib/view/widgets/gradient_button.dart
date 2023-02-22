@@ -2,37 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:unavida/app_themes.dart';
 
 class GradientButton extends StatelessWidget {
-  final String text;
+  final Widget child;
   final Function onPressed;
   Color? colorTop;
   Color? colorBottom;
-  Color? textColor;
+  double? height;
+  double? width;
+  late double? borderRadius;
 
   GradientButton({
     super.key,
-    required this.text,
+    required this.child,
     required this.onPressed,
     this.colorTop,
     this.colorBottom,
-    this.textColor,
+    this.height,
+    this.width,
+    this.borderRadius,
   }) {
     colorTop =
         colorTop ??= AppThemes().aestheticTheme.colorScheme.secondaryContainer;
     colorBottom =
         colorBottom ??= AppThemes().aestheticTheme.colorScheme.secondary;
-    textColor = textColor ??= AppThemes().aestheticTheme.colorScheme.onSecondary;
+    height = height ??= 40;
+    width = width ??= null;
+    borderRadius = borderRadius ??= 30;
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    TextStyle? textStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
-          color: textColor,
-        );
 
     return Container(
-      width: width,
-      height: 40,
+      padding: const EdgeInsets.all(0),
+      height: height,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -42,23 +45,24 @@ class GradientButton extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(borderRadius!),
       ),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          shadowColor: Colors.transparent,
-          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            disabledBackgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            shadowColor: Colors.transparent,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(borderRadius!),
+            ),
           ),
-        ),
-        onPressed: () {},
-        child: Text(
-          text,
-          style: textStyle,
+          onPressed: () => onPressed(),
+          child: child,
         ),
       ),
     );

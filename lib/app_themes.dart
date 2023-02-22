@@ -6,21 +6,16 @@ class AppThemes {
     'primary': Color(0xFFD2BA9E),
     'primaryContainer': Color(0xFFEEEADE),
     'onPrimary': Color(0xFF2D1F55),
-
     'secondary': Color(0xFFB9928B),
     'secondaryContainer': Color(0xFFD6A698),
     'onSecondary': Color(0xFFFEFEFE),
-
     'tertiary': Color(0xFF2D1F55),
     'onTertiary': Color(0xFFFEFEFE),
-
     'background': Color(0xFFFEFEFE),
     'onBackground': Color(0xFF2D1F55),
-
     'surface': Color(0xFFFAF7EF),
     'surfaceVariant': Color(0xFFFEFEFE),
     'onSurface': Color(0xFF2D1F55),
-
     'error': Colors.red,
     'onError': Colors.black,
   };
@@ -51,8 +46,12 @@ class AppThemes {
       error: _aestheticColors['error']!,
       onError: _aestheticColors['onError']!,
     ),
-
     textTheme: TextTheme(
+      headlineLarge: _aestheticTextStyle.copyWith(
+        fontSize: 35,
+        fontWeight: FontWeight.bold,
+        color: _aestheticColors['onBackground']!,
+      ),
       headlineMedium: _aestheticTextStyle.copyWith(
         fontSize: 24,
         fontWeight: FontWeight.bold,
@@ -73,10 +72,55 @@ class AppThemes {
         fontWeight: FontWeight.normal,
         color: _aestheticColors['background']!,
       ),
-
+      bodySmall: _aestheticTextStyle.copyWith(
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['onBackground']!,
+      ),
+      //input decoration theme
+      titleMedium: _aestheticTextStyle.copyWith(
+        fontSize: 20,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['onBackground']!,
+      ),
     ),
-
-
+    inputDecorationTheme: InputDecorationTheme(
+      constraints: BoxConstraints(),
+      contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      // isCollapsed: true,
+      isDense: true,
+      //uses titleMedium as text theme
+      hintStyle: _aestheticTextStyle.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['onBackground']!,
+      ),
+      filled: true,
+      fillColor: _aestheticColors['primaryContainer']!,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide.none,
+      ),
+      suffixStyle: _aestheticTextStyle.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['onBackground']!,
+      ),
+      labelStyle: _aestheticTextStyle.copyWith(
+        fontSize: 18,
+        fontWeight: FontWeight.normal,
+        color: _aestheticColors['onBackground']!,
+      ),
+    ),
+    sliderTheme: SliderThemeData(
+      activeTrackColor: _aestheticColors['secondaryContainer']!,
+      inactiveTrackColor: _aestheticColors['secondaryContainer']!,
+      trackHeight: 3,
+      thumbColor: _aestheticColors['secondaryContainer']!,
+      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+      overlayColor: _aestheticColors['primary']!.withAlpha(32),
+      overlayShape: SliderComponentShape.noOverlay,
+      valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+    ),
   );
-
 }
