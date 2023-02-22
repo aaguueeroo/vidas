@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'log_entry.dart';
 
 /// Types of log entries.
@@ -26,16 +28,23 @@ class Log {
 
   /// Factory constructor from map.
   factory Log.fromMap(Map<String, dynamic> map) => Log(
-        type: stringToLogType(map['type']),
-      ).._entries = List<LogEntry>.from(
-          map['entries'].map((e) => LogEntry.fromMap(e)),
-        );
+    type: stringToLogType(map['type']),
+  ).._entries = List<LogEntry>.from(
+    map['entries'].map((e) => LogEntry.fromMap(e)),
+  );
 
   /// Converts the log to a map.
   Map<String, dynamic> toMap() => {
-        'type': logTypeToString(_type),
-        'entries': _entries.map((e) => e.toMap()).toList(),
-      };
+    'type': logTypeToString(_type),
+    'entries': _entries.map((e) => e.toMap()).toList(),
+  };
+
+  /// Converts the log to a JSON string.
+  String toJson() => jsonEncode(toMap());
+
+  /// Factory constructor from a JSON string.
+  factory Log.fromJson(String jsonString) =>
+      Log.fromMap(jsonDecode(jsonString));
 
   /// Helper function to convert a [LogType] to a string.
   static String logTypeToString(LogType logType) {

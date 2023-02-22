@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:unavida/model/log/log.dart';
 
 /// A log is a record of a player's activity in the game.
@@ -27,7 +29,8 @@ class LogEntry {
     this._subtype,
     this._details,
   ) {
-    _timestamp = generateTimestamp();
+    //TODO make the timestamp depend on the game year
+    _timestamp = DateTime.now().toIso8601String();
   }
 
   /// Constructor for a log entry from a the database, which includes all the
@@ -53,11 +56,10 @@ class LogEntry {
         'details': _details,
       };
 
-  String generateTimestamp() {
-    //TODO creates the timestamp with the current game year and a counter increasing
-    String now = DateTime.now().toIso8601String();
-    return now;
-  }
+  factory LogEntry.fromJson(String jsonString) =>
+      LogEntry.fromMap(jsonDecode(jsonString));
+
+  String toJson() => jsonEncode(toMap());
 
   String toString() {
     return 'LogEntry: type: $_type, subtype: $_subtype, timestamp: $_timestamp, details: $_details';
