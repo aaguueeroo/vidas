@@ -4,14 +4,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DatabaseProvider {
+class DatabaseDao {
   static const String _databaseName = 'unavida.db';
   static const int _databaseVersion = 1;
 
   // Private constructor
-  DatabaseProvider._();
+  DatabaseDao._();
 
-  static final DatabaseProvider instance = DatabaseProvider._();
+  static final DatabaseDao instance = DatabaseDao._();
 
   static Database? _database;
 
@@ -28,6 +28,7 @@ class DatabaseProvider {
     );
     return _database;
   }
+
 
   Future<void> _copyDatabase() async {
     try {
@@ -50,9 +51,18 @@ class DatabaseProvider {
     }
   }
 
+  //CREATE
+
+
+  //READ
   Future<void> readDb() async {
     final db = await database;
-    final List<Map<String, dynamic>> result = await db!.query('viders');
+    final List<Map<String, dynamic>> result = await db!.query('vidas');
     print(result);
   }
+
+  //UPDATE
+
+
+  //DELETE
 }
