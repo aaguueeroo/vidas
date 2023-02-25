@@ -146,7 +146,6 @@ class InitController with ChangeNotifier {
       builder: (_) => NewVidaDialog(),
     );
 
-    print("New Vida button pressed");
   }
 
   void loadVidaButtonOnPressed(BuildContext context) {
@@ -155,7 +154,6 @@ class InitController with ChangeNotifier {
       builder: (_) => LoadVidaDialog(),
     );
 
-    print("Load Vida button pressed");
   }
 
   void randomButtonOnPressed() async {
@@ -166,8 +164,6 @@ class InitController with ChangeNotifier {
     await vidaDao.initialize();
     await vidaDao.createStateTables();
     await vidaDao.getAllVidaIds();
-
-    print("Random button pressed");
   }
 
   backButtonPressed(BuildContext context) {

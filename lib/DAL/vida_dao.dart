@@ -70,8 +70,8 @@ class VidaDao {
 
   //READ
   Future<List<int>?> getAllVidaIds() async {
-    print('getAllVidaIds');
     final result = await _database?.rawQuery('SELECT id FROM vidas');
+    print('getAllVidaIds: $result');
     print(result?.map<int>((row) => row['id'] as int).toList());
     return result?.map<int>((row) => row['id'] as int).toList();
   }
