@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:unavida/view/widgets/light_container.dart';
+import 'package:unavida/view/components/light_container.dart';
 
 class ActionButtons extends StatelessWidget {
   const ActionButtons({Key? key}) : super(key: key);

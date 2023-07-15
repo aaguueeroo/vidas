@@ -15,6 +15,14 @@ class DatabaseDao {
 
   static Database? _database;
 
+  /// Returns the [_database] instance or creates a new one if it doesn't exist.
+  /// If the database does not exist in the app directory, it will be copied
+  /// from the assets directory.
+  ///
+  /// Returns a [Future] that resolves to a [Database] instance once it is
+  /// available.
+  ///
+  /// Throws an error if the database cannot be opened.
   Future<Database?> get database async {
     if (_database != null) return _database;
 
@@ -29,7 +37,23 @@ class DatabaseDao {
     return _database;
   }
 
-
+  /// Copies the database file from the assets folder to the application
+  /// documents directory for use in the app.
+  ///
+  /// This function first obtains the directory where the app can store files,
+  /// then loads the database file from the assets folder using its asset path,
+  /// and finally writes the loaded database data to a file in the documents
+  /// directory. If successful, the function completes with a `Future<void>`.
+  ///
+  /// If any errors occur during the copying process, the function catches the
+  /// error and prints it to the console, but does not throw the error.
+  ///
+  /// Throws:
+  ///   - None.
+  ///
+  /// Returns:
+  ///   - A `Future` that completes with `void` when the database file is
+  ///     successfully copied.
   Future<void> _copyDatabase() async {
     try {
       // Get a reference to the directory where the app can store files.
@@ -55,11 +79,11 @@ class DatabaseDao {
 
 
   //READ
-  Future<void> readDb() async {
-    final db = await database;
-    final List<Map<String, dynamic>> result = await db!.query('vidas');
-    print(result);
-  }
+  // Future<void> readDb() async {
+  //   final db = await database;
+  //   final List<Map<String, dynamic>> result = await db!.query('vidas');
+  //   print(result);
+  // }
 
   //UPDATE
 

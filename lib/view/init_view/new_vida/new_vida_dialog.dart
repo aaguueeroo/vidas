@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/choose_avatar.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/gender_dropdown.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/sliders.dart';
-import 'package:unavida/view/widgets/gradient_button.dart';
-import 'package:unavida/view/widgets/light_container.dart';
+import 'package:unavida/view/components/gradient_button.dart';
+import 'package:unavida/view/components/light_container.dart';
 
 import '../init_controller.dart';
 

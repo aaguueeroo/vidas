@@ -2,29 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:unavida/view/init_view/init_view.dart';
 
 import '../../model/Gender.dart';
+import '../../model/traits.dart';
 import '../../model/vida.dart';
 import '../options_view.dart';
 
 class VidaController with ChangeNotifier {
-  late Vida _vida;
-
-  VidaController([Vida? vida]) {
-    if (vida != null) {
-      _vida = vida;
-    } else {
-      _vida = Vida.newGame(
-        name: '',
-        gender: Genders.Female,
-        avatar: 0,
-        ambitiousTrait: 50,
-        passiveTrait: 50,
-        extrovertedTrait: 50,
-        introvertedTrait: 50,
-        activeTrait: 50,
-        relaxedTrait: 50,
-      );
-    }
-  }
+  static late Vida _vida;
 
   String get name => _vida.name;
   Genders get gender => _vida.gender;
@@ -32,9 +15,21 @@ class VidaController with ChangeNotifier {
     return "assets/images/avatars/${_vida.avatar}.png";
   }
 
-  int get energy => _vida.energy;
+  double get energy => _vida.energy;
   int get age => _vida.age;
   int get money => _vida.money;
+
+  // VidaController([Vida? vida]) {
+  //   if (vida != null) {
+  //     _vida = vida;
+  //   } else {
+  //     _vida = Vida.newGame(
+  //       name: '',
+  //       gender: Genders.Female,
+  //       avatar: 0,
+  //     );
+  //   }
+  // }
 
   void updateVida(Vida vida) {
     _vida = vida;
@@ -42,9 +37,8 @@ class VidaController with ChangeNotifier {
   }
 
   void nextYear() {
-    _vida.age++;
+    _vida.growUp();
     notifyListeners();
-    print('age: ${_vida.age}');
   }
 
   void openOptions(BuildContext context) {
@@ -64,7 +58,5 @@ class VidaController with ChangeNotifier {
     );
   }
 
-  void saveGame(BuildContext context) {
-
-  }
+  void saveGame(BuildContext context) {}
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:unavida/view/social_view.dart';
+import 'package:unavida/view/social_view/social_view.dart';
 import 'package:unavida/view/stats_view.dart';
-import '../vida_view/vida_view.dart';
+import 'vida_view/vida_view.dart';
 
 class BottomNavigationBarView extends StatefulWidget {
   const BottomNavigationBarView({Key? key}) : super(key: key);

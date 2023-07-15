@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unavida/view/vida_view/vida_controller.dart';
 
-class UpperInformation extends StatelessWidget {
-  const UpperInformation({Key? key}) : super(key: key);
+class ToolBar extends StatelessWidget {
+  const ToolBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

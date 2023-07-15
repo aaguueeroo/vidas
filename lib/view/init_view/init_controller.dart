@@ -6,9 +6,10 @@ import 'package:unavida/view/init_view/new_vida/widgets/choose_avatar.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/gender_dropdown.dart';
 
 import '../../model/Gender.dart';
+import '../../model/traits.dart';
 import '../../model/vida.dart';
 import '../vida_view/vida_controller.dart';
-import '../widgets/bottom_navigation_bar_view.dart';
+import '../bottom_navigation_bar_view.dart';
 import 'load_vida/load_vida_dialog.dart';
 import 'new_vida/new_vida_dialog.dart';
 
@@ -101,12 +102,10 @@ class InitController with ChangeNotifier {
   /// and the [BottomNavigationBarView] is shown, created with the new vida as
   /// parameter.
   void startVidaButtonOnPressed(BuildContext context) async {
-    print("New Vida button pressed");
-
-    VidaDao vidaDao = VidaDao.instance;
-    await vidaDao.initialize();
-
-    await vidaDao.createStateTables();
+    // VidaDao vidaDao = VidaDao.instance;
+    // await vidaDao.initialize();
+    //
+    // await vidaDao.createStateTables();
 
     if (formKey.currentState!.validate()) {
       print("Form is valid");
@@ -115,12 +114,14 @@ class InitController with ChangeNotifier {
         name: nameController.text,
         gender: _selectedGender!,
         avatar: _selectedAvatar,
-        ambitiousTrait: getAmbitiousTrait(),
-        passiveTrait: getPassiveTrait(),
-        extrovertedTrait: getExtrovertedTrait(),
-        introvertedTrait: getIntrovertedTrait(),
-        activeTrait: getActiveTrait(),
-        relaxedTrait: getRelaxedTrait(),
+        traits: Traits(
+          ambitious: getAmbitiousTrait(),
+          passive: getPassiveTrait(),
+          extroverted: getExtrovertedTrait(),
+          introverted: getIntrovertedTrait(),
+          active: getActiveTrait(),
+          relaxed: getRelaxedTrait(),
+        ),
       );
 
       final vidaController =
@@ -130,7 +131,7 @@ class InitController with ChangeNotifier {
       navigatorKey.currentState!.pop();
       navigatorKey.currentState!.pushReplacement(
         MaterialPageRoute(
-          builder: (context) => BottomNavigationBarView(),
+          builder: (context) => const BottomNavigationBarView(),
         ),
       );
 
@@ -160,15 +161,13 @@ class InitController with ChangeNotifier {
     //TODO get random data
     // DatabaseDao databaseDao = DatabaseDao.instance;
     // await databaseDao.readDb();
-    VidaDao vidaDao = VidaDao.instance;
-    await vidaDao.initialize();
-    await vidaDao.createStateTables();
-    await vidaDao.getAllVidaIds();
+    // VidaDao vidaDao = VidaDao.instance;
+    // await vidaDao.initialize();
+    // await vidaDao.createStateTables();
+    // await vidaDao.getAllVidaIds();
   }
 
   backButtonPressed(BuildContext context) {
-    print("Back button pressed");
-
     restartNewVidaDialog();
     Navigator.pop(context);
   }
@@ -181,6 +180,5 @@ class InitController with ChangeNotifier {
     _extrovertedIntrovertedSlider = 0.5;
     _activeRelaxedSlider = 0.5;
   }
-
 
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:unavida/view/init_view/init_controller.dart';
-import 'package:unavida/view/widgets/gradient_button.dart';
+import 'package:unavida/view/components/gradient_button.dart';
 
 class InitView extends StatelessWidget {
   const InitView({Key? key}) : super(key: key);

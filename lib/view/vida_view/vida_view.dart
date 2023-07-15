@@ -4,9 +4,9 @@ import 'package:unavida/view/vida_view/vida_controller.dart';
 import 'package:unavida/view/vida_view/widgets/action_buttons.dart';
 import 'package:unavida/view/vida_view/widgets/energy_bar.dart';
 import 'package:unavida/view/vida_view/widgets/player_info.dart';
-import 'package:unavida/view/vida_view/widgets/upper_information.dart';
-import 'package:unavida/view/widgets/gradient_button.dart';
-import 'package:unavida/view/widgets/log_container.dart';
+import 'package:unavida/view/vida_view/widgets/tool_bar.dart';
+import 'package:unavida/view/components/gradient_button.dart';
+import 'package:unavida/view/components/log_container.dart';
 
 class VidaView extends StatelessWidget {
   const VidaView({Key? key}) : super(key: key);
@@ -41,9 +41,9 @@ class VidaView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Flexible(
+            const Flexible(
               flex: 2,
-              child: UpperInformation(),
+              child: ToolBar(),
             ),
             const Spacer(),
             Flexible(
@@ -65,10 +65,10 @@ class VidaView extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: width / 20,
-                    child: EnergyBar(energyLevel: 0.2),
+                    child: EnergyBar(energyLevel: controller.energy),
                   ),
-                  Spacer(),
-                  Expanded(
+                  const Spacer(),
+                  const Expanded(
                     flex: 19,
                     child: ActionButtons(),
                   ),
@@ -79,7 +79,7 @@ class VidaView extends StatelessWidget {
             const Spacer(),
 
             //log
-            Flexible(
+            const Flexible(
               flex: 13,
               child: LogContainer(),
             ),
@@ -88,10 +88,10 @@ class VidaView extends StatelessWidget {
 
             //next year button
             GradientButton(
-              child: Text('Next Year'),
               width: width,
               height: height / 23,
               onPressed: () => controller.nextYear(),
+              child: const Text('Next Year'),
             ),
           ],
         ),

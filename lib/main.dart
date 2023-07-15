@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: navigatorKey,
-      title: 'Unavida',
+      title: 'Vidas',
       theme: AppThemes().aestheticTheme,
       home: InitView(),
     );

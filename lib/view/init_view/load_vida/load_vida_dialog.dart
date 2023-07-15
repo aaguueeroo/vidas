@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/light_container.dart';
+import '../../components/light_container.dart';
 import '../init_controller.dart';
 
 class LoadVidaDialog extends StatelessWidget {

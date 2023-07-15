@@ -6,7 +6,10 @@ class StatsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('Stats'),
+      child: Text(
+        'Stats',
+        style: Theme.of(context).textTheme.headlineLarge,
+      ),
     );
   }
 }

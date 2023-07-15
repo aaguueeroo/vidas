@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unavida/view/vida_view/vida_controller.dart';
-import 'package:unavida/view/widgets/gradient_button.dart';
+import 'package:unavida/view/components/gradient_button.dart';
 
 class OptionsView extends StatelessWidget {
   const OptionsView({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/light_container.dart';
+import '../../components/light_container.dart';
 import '../vida_controller.dart';
 
 class PlayerInfo extends StatelessWidget {
