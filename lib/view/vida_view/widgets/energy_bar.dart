@@ -4,16 +4,24 @@ import 'package:flutter/material.dart';
 
 class EnergyBar extends StatelessWidget {
   final double energyLevel;
+  final bool vertical;
+  final double borderRadius;
 
-  const EnergyBar({Key? key, required this.energyLevel}) : super(key: key);
+  const EnergyBar({
+    Key? key,
+    required this.energyLevel,
+    required this.vertical,
+    this.borderRadius = 8,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double borderRadius = 8;
     Color fillingColor = Theme.of(context).colorScheme.primaryContainer;
-    Color borderColor = Theme.of(context).colorScheme.primaryContainer;
-    Color backgroundColor1 = Theme.of(context).colorScheme.tertiary.withOpacity(0.0);
-    Color backgroundColor2 = Theme.of(context).colorScheme.surface.withOpacity(0.2);
+    // Color borderColor = Theme.of(context).colorScheme.primaryContainer;
+    Color backgroundColor1 =
+        Theme.of(context).colorScheme.primary;
+    Color backgroundColor2 =
+        Theme.of(context).colorScheme.surface.withOpacity(0.6);
 
     return Stack(
       children: [
@@ -22,7 +30,9 @@ class EnergyBar extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(borderRadius),
             gradient: LinearGradient(
-              transform: GradientRotation(3 * pi / 1.7),
+              transform: vertical
+                  ? GradientRotation(3 * pi / 1.7)
+                  : GradientRotation(0.7),
               colors: [
                 backgroundColor1,
                 backgroundColor2,
@@ -44,9 +54,29 @@ class EnergyBar extends StatelessWidget {
                 backgroundColor2,
                 backgroundColor1,
                 backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
+                backgroundColor1,
+                backgroundColor2,
               ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+              begin: vertical ? Alignment.topCenter : Alignment.centerLeft,
+              end: vertical ? Alignment.bottomCenter : Alignment.centerRight,
             ),
           ),
         ),
@@ -59,8 +89,8 @@ class EnergyBar extends StatelessWidget {
                 fillingColor,
                 Colors.transparent,
               ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
+              begin: vertical ? Alignment.bottomCenter : Alignment.centerLeft,
+              end: vertical ? Alignment.topCenter : Alignment.centerRight,
               stops: [energyLevel, energyLevel],
             ),
             borderRadius: BorderRadius.circular(borderRadius),
@@ -68,15 +98,17 @@ class EnergyBar extends StatelessWidget {
         ),
 
         //Border
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: borderColor,
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
-        ),
+        // showBorder
+        //     ? Container(
+        //         decoration: BoxDecoration(
+        //           border: Border.all(
+        //             color: borderColor,
+        //             width: 2,
+        //           ),
+        //           borderRadius: BorderRadius.circular(borderRadius),
+        //         ),
+        //       )
+        //     : Container(),
       ],
     );
   }
