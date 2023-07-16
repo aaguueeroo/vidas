@@ -33,12 +33,11 @@ class NewVidaDialog extends StatelessWidget {
 
     return AlertDialog(
       backgroundColor: Colors.transparent,
-      content: LightContainer(
+      content: WhiteContainer(
         alignment: Alignment.center,
         borderRadius: 30,
-        width: width,
+        width: width - padding * 2,
         height: height / 1.3,
-        padding: EdgeInsets.all(padding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,10 +48,8 @@ class NewVidaDialog extends StatelessWidget {
               children: [
                 const BackButton(),
                 GradientButton(
-                  child: Text(
-                    randomButtonText,
-                    style: buttonTextStyle,
-                  ),
+                  text: randomButtonText,
+                  textStyle: buttonTextStyle,
                   onPressed: () => controller.randomButtonOnPressed(),
                 ),
               ],
@@ -124,11 +121,9 @@ class NewVidaDialog extends StatelessWidget {
             //Start Vida button
             GradientButton(
               width: 500,
-              child: Text(
-                startVidaButtonText,
-                style: buttonTextStyle,
-              ),
-              onPressed: () => controller.startVidaButtonOnPressed(context),
+              text: startVidaButtonText,
+              textStyle: buttonTextStyle,
+              onPressed: () => controller.startVida(context),
             ),
           ],
         ),

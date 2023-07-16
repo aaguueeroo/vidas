@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class LightContainer extends StatelessWidget {
+class WhiteContainer extends StatelessWidget {
   Key? key;
   AlignmentGeometry? alignment;
-  EdgeInsetsGeometry? padding;
   double? width;
   double? height;
   double? borderRadius;
@@ -15,10 +14,9 @@ class LightContainer extends StatelessWidget {
   Widget? child;
   Clip clipBehavior = Clip.none;
 
-  LightContainer({
+  WhiteContainer({
     this.key,
     this.alignment,
-    this.padding,
     this.width,
     this.height,
     this.borderRadius,
@@ -33,9 +31,9 @@ class LightContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(15),
       key: key,
       alignment: alignment,
-      padding: padding,
       width: width,
       height: height,
       constraints: constraints,
@@ -44,13 +42,13 @@ class LightContainer extends StatelessWidget {
       transformAlignment: transformAlignment,
       clipBehavior: clipBehavior,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius ??= 10),
+        borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
+            Colors.white,
             Theme.of(context).colorScheme.surface,
-            Theme.of(context).colorScheme.surfaceVariant,
           ],
         ),
       ),

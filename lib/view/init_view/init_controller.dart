@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:unavida/DAL/vida_dao.dart';
+import 'package:unavida/DAL/database_provider.dart';
 import 'package:unavida/main.dart';
+import 'package:unavida/model/vida_saving_slot.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/choose_avatar.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/gender_dropdown.dart';
 
@@ -9,7 +10,7 @@ import '../../model/Gender.dart';
 import '../../model/traits.dart';
 import '../../model/vida.dart';
 import '../vida_view/vida_controller.dart';
-import '../bottom_navigation_bar_view.dart';
+import '../base_views/bottom_navigation_bar_view.dart';
 import 'load_vida/load_vida_dialog.dart';
 import 'new_vida/new_vida_dialog.dart';
 
@@ -101,7 +102,7 @@ class InitController with ChangeNotifier {
   ///If all the fields in the [NewVidaDialog] are valid, a new Vida is created
   /// and the [BottomNavigationBarView] is shown, created with the new vida as
   /// parameter.
-  void startVidaButtonOnPressed(BuildContext context) async {
+  void startVida(BuildContext context) async {
     // VidaDao vidaDao = VidaDao.instance;
     // await vidaDao.initialize();
     //
@@ -149,12 +150,37 @@ class InitController with ChangeNotifier {
 
   }
 
-  void loadVidaButtonOnPressed(BuildContext context) {
+  /// Opens dialog that shows all the saved Vidas.
+  void loadVidaButtonOnPressed(BuildContext context) async {
+
     showDialog(
       context: context,
-      builder: (_) => LoadVidaDialog(),
+      builder: (_) => const LoadVidaDialog(),
     );
 
+  }
+
+  void loadVida(VidaSavingSlot slot, BuildContext context) {
+    final vidaController = Provider.of<VidaController>(context, listen: false);
+    Vida vida = Vida.loadGame(slot: slot);
+
+    vidaController.updateVida(vida);
+
+    navigatorKey.currentState!.pop();
+    navigatorKey.currentState!.pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const BottomNavigationBarView(),
+      ),
+    );
+  }
+
+  Future<List<dynamic>> getVidaSlots() async {
+    List<dynamic> vidaSlots = [];
+    final savedGames = await DatabaseProvider().getSavedGames();
+    for (int i = 0; i < savedGames.length ; i++) {
+      vidaSlots.add(savedGames[i]);
+    }
+    return vidaSlots;
   }
 
   void randomButtonOnPressed() async {

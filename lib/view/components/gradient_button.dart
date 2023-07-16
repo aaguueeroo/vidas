@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:unavida/app_themes.dart';
 
 class GradientButton extends StatelessWidget {
-  final Widget child;
+  final String text;
   final Function onPressed;
+  TextStyle? textStyle;
+  Color? textColor;
   Color? colorTop;
   Color? colorBottom;
   double? height;
@@ -12,7 +14,9 @@ class GradientButton extends StatelessWidget {
 
   GradientButton({
     super.key,
-    required this.child,
+    required this.text,
+    this.textStyle,
+    this.textColor,
     required this.onPressed,
     this.colorTop,
     this.colorBottom,
@@ -31,6 +35,10 @@ class GradientButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    textStyle = textStyle ??= Theme.of(context).textTheme.bodyMedium?.copyWith(
+      color: textColor ??= Theme.of(context).colorScheme.tertiary,
+    );
 
     return Container(
       padding: const EdgeInsets.all(0),
@@ -62,7 +70,10 @@ class GradientButton extends StatelessWidget {
             ),
           ),
           onPressed: () => onPressed(),
-          child: child,
+          child: Text(
+            text,
+            style: textStyle,
+          )
         ),
       ),
     );

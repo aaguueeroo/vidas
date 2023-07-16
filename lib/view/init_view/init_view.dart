@@ -9,7 +9,6 @@ class InitView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('InitView.build()');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double padding = 20;
@@ -43,19 +42,17 @@ class InitView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(flex: 8),
+            const Spacer(flex: 8),
             GradientButton(
               height: height / 18,
               width: width,
               colorTop: Theme.of(context).colorScheme.background,
               colorBottom: Theme.of(context).colorScheme.primaryContainer,
               onPressed: () => controller.newVidaButtonOnPressed(context),
-              child: Text(
-                newVidaButtonText,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-              ),
+              text: newVidaButtonText,
+              textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
             ),
             const SizedBox(
               height: 10,
@@ -66,12 +63,10 @@ class InitView extends StatelessWidget {
               colorTop: Theme.of(context).colorScheme.background,
               colorBottom: Theme.of(context).colorScheme.primaryContainer,
               onPressed: () => controller.loadVidaButtonOnPressed(context),
-              child: Text(
-                loadVidaButtonText,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-              ),
+              text: loadVidaButtonText,
+              textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
             ),
             const Spacer(flex: 10),
             Column(

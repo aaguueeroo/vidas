@@ -37,9 +37,8 @@ class PlayerInfo extends StatelessWidget {
       children: [
         Flexible(
           flex: 10,
-          child: LightContainer(
+          child: WhiteContainer(
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(10),
             child: FittedBox(
                 fit: BoxFit.contain,
                 child: ColorFiltered(

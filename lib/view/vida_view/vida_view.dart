@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unavida/view/components/background_container.dart';
 import 'package:unavida/view/vida_view/vida_controller.dart';
 import 'package:unavida/view/vida_view/widgets/action_buttons.dart';
 import 'package:unavida/view/vida_view/widgets/energy_bar.dart';
@@ -18,83 +19,68 @@ class VidaView extends StatelessWidget {
 
     VidaController controller = Provider.of<VidaController>(context);
 
-    return Container(
-      width: width,
-      height: height,
-      padding: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: 0,
-        bottom: 35,
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primaryContainer,
-          ],
-        ),
-      ),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Flexible(
-              flex: 2,
-              child: ToolBar(),
+    return BackgroundContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Flexible(
+            flex: 2,
+            child: ToolBar(),
+          ),
+          const Spacer(),
+          Flexible(
+            flex: 6,
+            child: PlayerInfo(
+              fullName: controller.name,
+              age: controller.age,
+              title:
+                  controller.gender.toString(), //TODO substitute for position
             ),
-            const Spacer(),
-            Flexible(
-              flex: 6,
-              child: PlayerInfo(
-                fullName: controller.name,
-                age: controller.age,
-                title: controller.gender.toString(), //TODO substitute for position
-              ),
-            ),
+          ),
 
-            const Spacer(),
+          const Spacer(),
 
-            //Main actions
-            Flexible(
-              flex: 25,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    width: width / 20,
-                    child: EnergyBar(energyLevel: controller.energy),
+          //Main actions
+          Flexible(
+            flex: 25,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  width: width / 20,
+                  child: EnergyBar(
+                    energyLevel: controller.energy,
+                    vertical: true,
                   ),
-                  const Spacer(),
-                  const Expanded(
-                    flex: 19,
-                    child: ActionButtons(),
-                  ),
-                ],
-              ),
+                ),
+                const Spacer(),
+                const Expanded(
+                  flex: 19,
+                  child: ActionButtons(),
+                ),
+              ],
             ),
+          ),
 
-            const Spacer(),
+          const Spacer(),
 
-            //log
-            const Flexible(
-              flex: 13,
-              child: LogContainer(),
-            ),
+          //log
+          const Flexible(
+            flex: 13,
+            child: LogContainer(),
+          ),
 
-            const Spacer(),
+          const Spacer(),
 
-            //next year button
-            GradientButton(
-              width: width,
-              height: height / 23,
-              onPressed: () => controller.nextYear(),
-              child: const Text('Next Year'),
-            ),
-          ],
-        ),
+          //next year button
+          GradientButton(
+            width: width,
+            height: height / 23,
+            onPressed: () => controller.nextYearPressed(),
+            text: 'Next year',
+            textColor: Theme.of(context).colorScheme.onSecondary,
+          ),
+        ],
       ),
     );
   }

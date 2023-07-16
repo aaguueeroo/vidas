@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BackButton extends StatelessWidget {
-  const BackButton({Key? key}) : super(key: key);
+class CustomBackButton extends StatelessWidget {
+  const CustomBackButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,11 +10,11 @@ class BackButton extends StatelessWidget {
     return Container(
       alignment: Alignment.centerLeft,
       width: 40,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          minimumSize: Size(40, 0),
-        ),
-        onPressed: () => {
+      height: 40,
+      child: InkWell(
+        highlightColor: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(10),
+        onTap: () => {
           Navigator.of(context).pop(),
         },
         child: Icon(
