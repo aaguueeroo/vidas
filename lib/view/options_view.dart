@@ -40,7 +40,7 @@ class OptionsView extends StatelessWidget {
               ),
               GradientButton(
                 width: width,
-                text: "load game",
+                text: "quit game",
                 onPressed: () => controller.quitGame(context),
               ),
             ],

@@ -16,12 +16,12 @@ class Gender{
       case Genders.Diverse:
         return 'Diverse';
       default:
-        throw UnimplementedError("Gender not implemented");
+        throw UnimplementedError("Gender type is not right");
     }
   }
 
   ///Converts a string to the enum [Genders]
-  static Genders stringToGender(String string) {
+  static Genders fromString(String string) {
     switch (string) {
       case 'Male':
         return Genders.Male;
@@ -30,7 +30,7 @@ class Gender{
       case 'Diverse':
         return Genders.Diverse;
       default:
-        throw UnimplementedError("Gender not implemented");
+        throw UnimplementedError("Gender string is not recognized");
     }
   }
 

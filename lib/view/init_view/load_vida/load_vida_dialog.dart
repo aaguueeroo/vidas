@@ -37,14 +37,20 @@ class LoadVidaDialog extends StatelessWidget {
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
-                        return VidaSlotWidget(
-                          vida: snapshot.data![index],
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 0,
+                          ),
+                          child: VidaSlotWidget(
+                            vida: snapshot.data![index],
+                          ),
                         );
                       },
                     );
                   } else {
                     return const Center(
-                      child: CircularProgressIndicator(),
+                      child: Text('No saved games'),
                     );
                   }
                 },
@@ -73,45 +79,49 @@ class VidaSlotWidget extends StatelessWidget {
       context,
     );
 
-    return ElevatedButton(
-      style: ButtonStyle(
-        elevation: MaterialStateProperty.all<double>(2),
-        backgroundColor: MaterialStateProperty.all<Color>(
-          Theme.of(context).colorScheme.primaryContainer,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          elevation: MaterialStateProperty.all<double>(2),
+          backgroundColor: MaterialStateProperty.all<Color>(
+            Theme.of(context).colorScheme.primaryContainer,
+          ),
         ),
-      ),
-      onPressed: () => controller.loadVida(vida, context),
-      child: Container(
-        height: 100,
-        padding: const EdgeInsets.only(
-          left: 10,
-          right: 0,
-          top: 10,
-          bottom: 10,
-        ),
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(10),
-        //   // color: Theme.of(context).colorScheme.primaryContainer,
-        // ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(vida.name, style: textStyle),
-                Text('${vida.age} years old', style: textStyle),
-                const Spacer(),
-                Text("23/07/2023", style: smallTextStyle),
-              ],
-            ),
-            Image.asset(
-              "assets/images/avatars/${vida.avatarId}.png",
-              // height: 100,
-              // width: 100,
-            ),
-          ],
+        onPressed: () => controller.loadGame(vida, context),
+        onLongPress: () => controller.deleteGame(vida, context),
+        child: Container(
+          height: 100,
+          padding: const EdgeInsets.only(
+            left: 10,
+            right: 0,
+            top: 10,
+            bottom: 10,
+          ),
+          // decoration: BoxDecoration(
+          //   borderRadius: BorderRadius.circular(10),
+          //   // color: Theme.of(context).colorScheme.primaryContainer,
+          // ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(vida.name, style: textStyle),
+                  Text('${vida.age} years old', style: textStyle),
+                  const Spacer(),
+                  Text("23/07/2023", style: smallTextStyle),
+                ],
+              ),
+              Image.asset(
+                "assets/images/avatars/${vida.avatarId}.png",
+                // height: 100,
+                // width: 100,
+              ),
+            ],
+          ),
         ),
       ),
     );

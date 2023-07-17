@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:unavida/view/init_view/init_view.dart';
 
-import '../../model/Gender.dart';
-import '../../model/traits.dart';
+import '../../DAL/database_provider.dart';
+import '../../model/gender.dart';
 import '../../model/vida.dart';
+import '../education_view/education_view.dart';
 import '../options_view.dart';
 
 class VidaController with ChangeNotifier {
@@ -36,9 +37,20 @@ class VidaController with ChangeNotifier {
     notifyListeners();
   }
 
-  void nextYear() {
+  //BUTTON ACTIONS
+
+  void nextYearPressed() {
     _vida.growUp();
     notifyListeners();
+
+    print('id: ${_vida.id}');
+    print('name: ${_vida.name}');
+    print('age: ${_vida.age}');
+    print(_vida.traits.toJson());
+    for(int i=0; i<_vida.education.length; i++){
+      print(' ${_vida.education[i]}');
+    }
+
   }
 
   void openOptions(BuildContext context) {
@@ -49,6 +61,7 @@ class VidaController with ChangeNotifier {
     );
   }
 
+  //options
   void quitGame(BuildContext context) {
     Navigator.of(context).pop();
     Navigator.of(context).pushReplacement(
@@ -58,5 +71,29 @@ class VidaController with ChangeNotifier {
     );
   }
 
-  void saveGame(BuildContext context) {}
+  void saveGame(BuildContext context) async {
+    await DatabaseProvider.instance.saveGame(_vida);
+    _vida.id = await DatabaseProvider.instance.getLatestId();
+
+    print(_vida.toSlot().toMap().toString());
+    print(_vida.education.toString());
+  }
+
+  void openEducation(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EducationView(
+          name: name,
+          grade: 40,
+          currentGrade: 'B',
+          performance: 0.5,
+          educationHistory: [],
+        ),
+      ),
+    );
+  }
+
+  //open Work
+  //open Leisure
+  //open Health
 }

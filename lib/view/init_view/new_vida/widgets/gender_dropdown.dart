@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:unavida/view/init_view/init_controller.dart';
 
-import '../../../../model/Gender.dart';
+import '../../../../model/gender.dart';
 
 class GenderDropdown extends StatelessWidget {
   final InitController controller;
@@ -37,7 +37,7 @@ class GenderDropdown extends StatelessWidget {
         isExpanded: true,
         items: genderItems,
         onChanged: (value) {
-          controller.selectedGender = Gender.stringToGender(value!);
+          controller.selectedGender = Gender.fromString(value!);
         },
       ),
     );

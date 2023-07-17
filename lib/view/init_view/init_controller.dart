@@ -6,7 +6,7 @@ import 'package:unavida/model/vida_saving_slot.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/choose_avatar.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/gender_dropdown.dart';
 
-import '../../model/Gender.dart';
+import '../../model/gender.dart';
 import '../../model/traits.dart';
 import '../../model/vida.dart';
 import '../vida_view/vida_controller.dart';
@@ -160,9 +160,15 @@ class InitController with ChangeNotifier {
 
   }
 
-  void loadVida(VidaSavingSlot slot, BuildContext context) {
+  Future<List<VidaSavingSlot>?> getVidaSlots() async {
+    return await DatabaseProvider.instance.getSlots();
+  }
+
+  Future<void> loadGame(VidaSavingSlot slot, BuildContext context) async {
+
     final vidaController = Provider.of<VidaController>(context, listen: false);
-    Vida vida = Vida.loadGame(slot: slot);
+
+    Vida vida = await DatabaseProvider.instance.loadGame(slot);
 
     vidaController.updateVida(vida);
 
@@ -174,13 +180,9 @@ class InitController with ChangeNotifier {
     );
   }
 
-  Future<List<dynamic>> getVidaSlots() async {
-    List<dynamic> vidaSlots = [];
-    final savedGames = await DatabaseProvider().getSavedGames();
-    for (int i = 0; i < savedGames.length ; i++) {
-      vidaSlots.add(savedGames[i]);
-    }
-    return vidaSlots;
+  Future<void> deleteGame(VidaSavingSlot slot, BuildContext context) async {
+    await DatabaseProvider.instance.deleteGame(slot);
+    notifyListeners();
   }
 
   void randomButtonOnPressed() async {
@@ -193,7 +195,7 @@ class InitController with ChangeNotifier {
     // await vidaDao.getAllVidaIds();
   }
 
-  backButtonPressed(BuildContext context) {
+  void backButtonPressed(BuildContext context) {
     restartNewVidaDialog();
     Navigator.pop(context);
   }

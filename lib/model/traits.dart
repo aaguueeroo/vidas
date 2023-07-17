@@ -40,6 +40,18 @@ class Traits {
     _relaxed = relaxed;
   }
 
+  static Traits fromJson(String json) {
+    final map = jsonDecode(json);
+    return Traits(
+      ambitious: map['ambitious'],
+      passive: map['passive'],
+      extroverted: map['extroverted'],
+      introverted: map['introverted'],
+      active: map['active'],
+      relaxed: map['relaxed'],
+    );
+  }
+
   String toJson() {
     return jsonEncode({
       'ambitious': _ambitious,
@@ -49,16 +61,5 @@ class Traits {
       'active': _active,
       'relaxed': _relaxed,
     });
-  }
-
-  static Traits fromJson(Map json) {
-    return Traits(
-      ambitious: json['ambitious'],
-      passive: json['passive'],
-      extroverted: json['extroverted'],
-      introverted: json['introverted'],
-      active: json['active'],
-      relaxed: json['relaxed'],
-    );
   }
 }
