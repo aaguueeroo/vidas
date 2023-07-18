@@ -34,7 +34,7 @@ class VidaView extends StatelessWidget {
               fullName: controller.name,
               age: controller.age,
               title:
-                  controller.gender.toString(), //TODO substitute for position
+                  controller.gender, //TODO substitute for position
             ),
           ),
 
