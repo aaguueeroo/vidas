@@ -9,17 +9,15 @@ import '../../vida_view/widgets/energy_bar.dart';
 /// bar showing performance.
 class MainInfo extends StatelessWidget {
   final String name;
-  final String currentDegree;
-  final int grade;
-  final double performance;
+  final String? courseName;
+  final double? grade;
   final List<Education> educationHistory;
 
   const MainInfo({
     Key? key,
     required this.name,
-    required this.currentDegree,
+    required this.courseName,
     required this.grade,
-    required this.performance,
     required this.educationHistory,
   }) : super(key: key);
 
@@ -73,14 +71,16 @@ class MainInfo extends StatelessWidget {
 
                   //Player age
                   Text(
-                    currentDegree,
+                    courseName == null
+                        ? 'No current studies'
+                        : 'Course: $courseName',
                     textAlign: TextAlign.start,
                     style: textStyle,
                   ),
 
                   //Player job position or study
                   Text(
-                    'Grade: $grade/100',
+                    grade == null ? '' : 'Grade: $grade/100',
                     textAlign: TextAlign.start,
                     style: textStyle,
                   ),
@@ -102,7 +102,7 @@ class MainInfo extends StatelessWidget {
               ),
             ),
             Text(
-              'Performance',
+              'Grade',
               style: textStyle,
             ),
           ],

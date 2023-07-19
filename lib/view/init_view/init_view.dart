@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:unavida/view/init_view/init_controller.dart';
 import 'package:unavida/view/components/gradient_button.dart';
+import 'package:unavida/view/init_view/init_controller.dart';
 
 class InitView extends StatelessWidget {
   const InitView({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class InitView extends StatelessWidget {
               width: width,
               colorTop: Theme.of(context).colorScheme.background,
               colorBottom: Theme.of(context).colorScheme.primaryContainer,
-              onPressed: () => controller.newVidaButtonOnPressed(context),
+              onPressed: () => controller.showNewVidaOptions(context),
               text: newVidaButtonText,
               textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
@@ -62,11 +62,14 @@ class InitView extends StatelessWidget {
               width: width,
               colorTop: Theme.of(context).colorScheme.background,
               colorBottom: Theme.of(context).colorScheme.primaryContainer,
-              onPressed: () => controller.loadVidaButtonOnPressed(context),
+              onPressed: () => controller.showLoadedGames(context),
               text: loadVidaButtonText,
               textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary,
                   ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             const Spacer(flex: 10),
             Column(

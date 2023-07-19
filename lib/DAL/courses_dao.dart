@@ -2,12 +2,10 @@ import 'package:sqflite/sqflite.dart';
 
 import 'data_access_object.dart';
 
-class EducationRepositoryDao extends DataAccessObject {
-
-  EducationRepositoryDao(Database database) : super(database, 'education_repository');
+class CoursesDao extends DataAccessObject {
+  CoursesDao(Database database) : super(database, 'courses');
 
   Future<Map<String, dynamic>?> readRowById(int id) async {
     return await databaseHelper.readRowById(tableName, id);
   }
-
 }

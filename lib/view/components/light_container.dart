@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class WhiteContainer extends StatelessWidget {
   Key? key;
   AlignmentGeometry? alignment;
   double? width;
   double? height;
+  EdgeInsetsGeometry? padding;
   double? borderRadius;
   BoxConstraints? constraints;
   EdgeInsetsGeometry? margin;
@@ -19,6 +19,7 @@ class WhiteContainer extends StatelessWidget {
     this.alignment,
     this.width,
     this.height,
+    this.padding,
     this.borderRadius,
     this.constraints,
     this.margin,
@@ -31,7 +32,7 @@ class WhiteContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15),
+      padding: padding,
       key: key,
       alignment: alignment,
       width: width,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:unavida/view/components/gradient_button.dart';
+import 'package:unavida/view/components/light_container.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/choose_avatar.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/gender_dropdown.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/sliders.dart';
-import 'package:unavida/view/components/gradient_button.dart';
-import 'package:unavida/view/components/light_container.dart';
 
 import '../init_controller.dart';
 
@@ -31,9 +31,13 @@ class NewVidaDialog extends StatelessWidget {
       context,
     );
 
-    return AlertDialog(
+    return Dialog(
       backgroundColor: Colors.transparent,
-      content: WhiteContainer(
+      child: WhiteContainer(
+        padding: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 15,
+        ),
         alignment: Alignment.center,
         borderRadius: 30,
         width: width - padding * 2,
@@ -105,8 +109,7 @@ class NewVidaDialog extends StatelessWidget {
               child: Sliders(controller: controller, textStyle: labelStyle),
             ),
 
-            const Spacer(flex: 10),
-
+            const Spacer(),
             //Choose avatar
             Expanded(
               flex: 15,

@@ -62,4 +62,14 @@ class Traits {
       'relaxed': _relaxed,
     });
   }
+
+  @override
+  String toString() {
+    return "\n   Ambitious: $_ambitious\n"
+        "   Passive: $_passive\n"
+        "   Extroverted: $_extroverted\n"
+        "   Introverted: $_introverted\n"
+        "   Active: $_active\n"
+        "   Relaxed: $_relaxed\n";
+  }
 }

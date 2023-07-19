@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:unavida/DAL/database_provider.dart';
+import 'package:unavida/view/education_view/education_controller.dart';
 import 'package:unavida/view/init_view/init_controller.dart';
 import 'package:unavida/view/init_view/init_view.dart';
 import 'package:unavida/view/vida_view/vida_controller.dart';
 
-import 'app_themes.dart';
+import 'utils/app_themes.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> globalNavigationKey =
+    GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> dialogsNavigationKey =
+    GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +23,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => VidaController()),
       ChangeNotifierProvider(create: (_) => InitController()),
+      ChangeNotifierProvider(create: (_) => EducationController()),
     ],
     child: MyApp(),
   ));
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: navigatorKey,
+      navigatorKey: globalNavigationKey,
       title: 'Vidas',
       theme: AppThemes().aestheticTheme,
       home: InitView(),

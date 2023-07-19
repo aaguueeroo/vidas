@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:unavida/model/traits.dart';
-import 'package:unavida/model/vida_saving_slot.dart';
 import 'package:unavida/model/education/education.dart';
 import 'package:unavida/model/gender.dart';
+import 'package:unavida/model/traits.dart';
+import 'package:unavida/model/vida_saving_slot.dart';
 
 /// Class that contains all the information of the game.
 class Vida {
@@ -37,15 +37,16 @@ class Vida {
   /// Energy of the player. It decreases every time the player does an action,
   /// and it resets every new year.
   late double _energy;
+
   double get energy => _energy / 100;
 
   /// Traits of the players.
   late Traits _traits;
+
   get traits => _traits;
 
   /// Education of the player that includes all the education acquired until now
-  late List<Education> _education;
-  get education => _education;
+  late List<Education> educationList;
 
   /// Stats of the player for the current Vida.
   // late Stats _stats;
@@ -123,7 +124,7 @@ class Vida {
     _age = age;
     _money = money;
     _traits = traits;
-    _education = education;
+    educationList = education;
 
     // _initializeEducation(id);
 
@@ -153,10 +154,23 @@ class Vida {
 
   String gameDataToJson() {
     return jsonEncode({
-      'energy': energy,
+      'energy': _energy,
       'money': money,
       'gender': Gender.genderToString(gender),
       'traits': traits.toJson()
     });
+  }
+
+  @override
+  String toString() {
+    return '--- VIDA --- \n '
+        'ID: $id\n '
+        'Name: $name\n'
+        'Avatar id: $avatar\n'
+        'Age: $age\n'
+        'Gender: ${Gender.genderToString(gender)}\n'
+        'Money: $money\n'
+        'Energy: $energy\n'
+        'Traits: ${traits.toString()}\n';
   }
 }

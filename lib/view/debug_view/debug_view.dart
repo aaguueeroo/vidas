@@ -24,7 +24,7 @@ class DebugView extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: const CustomBackButton(),
+          leading: CustomBackButton(),
         ),
         backgroundColor: Colors.transparent,
         body: Padding(

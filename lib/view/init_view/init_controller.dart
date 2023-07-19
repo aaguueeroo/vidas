@@ -6,11 +6,13 @@ import 'package:unavida/model/vida_saving_slot.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/choose_avatar.dart';
 import 'package:unavida/view/init_view/new_vida/widgets/gender_dropdown.dart';
 
+import '../../model/education/education.dart';
 import '../../model/gender.dart';
 import '../../model/traits.dart';
 import '../../model/vida.dart';
-import '../vida_view/vida_controller.dart';
 import '../base_views/bottom_navigation_bar_view.dart';
+import '../education_view/education_controller.dart';
+import '../vida_view/vida_controller.dart';
 import 'load_vida/load_vida_dialog.dart';
 import 'new_vida/new_vida_dialog.dart';
 
@@ -25,7 +27,6 @@ class InitController with ChangeNotifier {
   Genders? _selectedGender = Genders.Male;
   Genders? get selectedGender => _selectedGender;
   set selectedGender(Genders? gender) {
-    print("selected gender: $gender");
     _selectedGender = gender; // set the gender variable
     notifyListeners(); // notify listeners of the change
   }
@@ -109,7 +110,6 @@ class InitController with ChangeNotifier {
     // await vidaDao.createStateTables();
 
     if (formKey.currentState!.validate()) {
-      print("Form is valid");
 
       Vida vida = Vida.newGame(
         name: nameController.text,
@@ -128,9 +128,14 @@ class InitController with ChangeNotifier {
       final vidaController =
           Provider.of<VidaController>(context, listen: false);
       vidaController.updateVida(vida);
+      final educationController =
+          Provider.of<EducationController>(context, listen: false);
+      final List<Education> educations = [];
+      vida.educationList = educations;
+      educationController.updateEducation(educations);
 
-      navigatorKey.currentState!.pop();
-      navigatorKey.currentState!.pushReplacement(
+      globalNavigationKey.currentState!.pop();
+      globalNavigationKey.currentState!.pushReplacement(
         MaterialPageRoute(
           builder: (context) => const BottomNavigationBarView(),
         ),
@@ -142,42 +147,40 @@ class InitController with ChangeNotifier {
     }
   }
 
-  void newVidaButtonOnPressed(BuildContext context) {
+  void showNewVidaOptions(BuildContext context) {
     showDialog(
       context: context,
       builder: (_) => NewVidaDialog(),
     );
-
   }
 
   /// Opens dialog that shows all the saved Vidas.
-  void loadVidaButtonOnPressed(BuildContext context) async {
-
+  void showLoadedGames(BuildContext context) async {
     showDialog(
       context: context,
       builder: (_) => const LoadVidaDialog(),
     );
-
-  }
-
-  Future<List<VidaSavingSlot>?> getVidaSlots() async {
-    return await DatabaseProvider.instance.getSlots();
   }
 
   Future<void> loadGame(VidaSavingSlot slot, BuildContext context) async {
-
-    final vidaController = Provider.of<VidaController>(context, listen: false);
-
     Vida vida = await DatabaseProvider.instance.loadGame(slot);
 
+    final vidaController = Provider.of<VidaController>(context, listen: false);
     vidaController.updateVida(vida);
+    final educationController =
+        Provider.of<EducationController>(context, listen: false);
+    educationController.updateEducation(vida.educationList);
 
-    navigatorKey.currentState!.pop();
-    navigatorKey.currentState!.pushReplacement(
+    globalNavigationKey.currentState!.pop();
+    globalNavigationKey.currentState!.pushReplacement(
       MaterialPageRoute(
         builder: (context) => const BottomNavigationBarView(),
       ),
     );
+  }
+
+  Future<List<VidaSavingSlot>?> getVidaSlots() async {
+    return await DatabaseProvider.instance.getSlots();
   }
 
   Future<void> deleteGame(VidaSavingSlot slot, BuildContext context) async {

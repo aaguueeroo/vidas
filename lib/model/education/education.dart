@@ -11,11 +11,10 @@ class Education {
   Levels level;
   int totalYears;
   int currentYear;
-  int extraYears;
   double grade; // 0-100
   static const double maxGrade = 100.0;
   static const double passingGrade = 50.0;
-  static const int maxExtraYears = 3;
+  static const int maxYears = 3;
   bool finished;
   bool abandoned;
   bool kickedOut;
@@ -32,7 +31,6 @@ class Education {
     required this.level,
     required this.totalYears,
     this.currentYear = 0,
-    this.extraYears = 0,
     this.grade = passingGrade,
     this.finished = false,
     this.abandoned = false,
@@ -43,12 +41,10 @@ class Education {
     if (!finished && !abandoned && !kickedOut) {
       currentYear++;
 
-      if (extraYears > maxExtraYears) {
+      if (currentYear > maxYears) {
         kickOut();
       } else if (currentYear > totalYears && grade >= passingGrade) {
         finished = true;
-      } else if (currentYear > totalYears && grade < passingGrade) {
-        extraYears++;
       }
     }
   }
@@ -81,13 +77,12 @@ class Education {
       repositoryId: map['education_id'],
       courseName: map['name'],
       price: map['price'],
-      field: Field().fromString(map['field']),
-      level: Level().fromString(map['level']),
+      field: Field.fromString(map['field']),
+      level: Level.fromString(map['level']),
       institutionName: map['institution'],
       totalYears: map['totalYears'],
       currentYear: map['current_year'],
-      extraYears: map['extra_years'],
-      grade: map['grade'],
+      grade: (map['grade'] as int) * 1.0,
       finished: map['finished'] == 1,
       abandoned: map['abandoned'] == 1,
       kickedOut: map['kicked_out'] == 1,
@@ -95,36 +90,44 @@ class Education {
   }
 
   Map<String, dynamic> toMap(int vidaId) {
-    return id == null? {
-      'education_id': repositoryId,
-      'name': courseName,
-      'price': price,
-      'field': Field().fieldToString(field),
-      'level': Level().levelToString(level),
-      'institution': institutionName,
-      'totalYears': totalYears,
-      'current_year': currentYear,
-      'extra_years': extraYears,
-      'grade': grade,
-      'finished': finished ? 1 : 0,
-      'abandoned': abandoned ? 1 : 0,
-      'kicked_out': kickedOut ? 1 : 0,
-    } :{
-      'id': id,
-      'education_id': repositoryId,
-      'name': courseName,
-      'price': price,
-      'field': Field().fieldToString(field),
-      'level': Level().levelToString(level),
-      'institution': institutionName,
-      'totalYears': totalYears,
-      'current_year': currentYear,
-      'extra_years': extraYears,
-      'grade': grade,
-      'finished': finished ? 1 : 0,
-      'abandoned': abandoned ? 1 : 0,
-      'kicked_out': kickedOut ? 1 : 0,
-    };
+    return id == null
+        ? {
+            'vida_id': vidaId,
+            'education_id': repositoryId,
+            'current_year': currentYear,
+            'grade': grade,
+            'finished': finished ? 1 : 0,
+            'abandoned': abandoned ? 1 : 0,
+            'kicked_out': kickedOut ? 1 : 0,
+          }
+        : {
+            'id': id,
+            'vida_id': vidaId,
+            'education_id': repositoryId,
+            'current_year': currentYear,
+            'grade': grade,
+            'finished': finished ? 1 : 0,
+            'abandoned': abandoned ? 1 : 0,
+            'kicked_out': kickedOut ? 1 : 0,
+          };
+  }
+
+  @override
+  String toString() {
+    return '\nCourse: \n'
+        '   Id: $id, \n'
+        '   RepositoryId: $repositoryId, \n'
+        '   InstitutionName: $institutionName, \n'
+        '   courseName: $courseName, \n'
+        '   price: $price, \n'
+        '   field: $field, \n'
+        '   level: $level, \n'
+        '   totalYears: $totalYears, \n'
+        '   currentYear: $currentYear, \n'
+        '   grade: $grade\n'
+        '   finished: $finished\n'
+        '   abandoned: $abandoned\n'
+        '   kickedOut: $kickedOut\n';
   }
 }
 
@@ -134,10 +137,11 @@ enum Levels {
   master,
   phd,
   course,
+  language,
 }
 
 class Level {
-  String levelToString(Levels level) {
+  static String levelToString(Levels level) {
     switch (level) {
       case Levels.school:
         return 'School';
@@ -149,12 +153,14 @@ class Level {
         return 'PhD';
       case Levels.course:
         return 'Course';
+      case Levels.language:
+        return 'Language';
       default:
         return 'Course';
     }
   }
 
-  Levels fromString(String string) {
+  static Levels fromString(String string) {
     switch (string) {
       case 'School':
         return Levels.school;
@@ -166,6 +172,46 @@ class Level {
         return Levels.phd;
       case 'Course':
         return Levels.course;
+      case 'Language':
+        return Levels.language;
+      default:
+        return Levels.course;
+    }
+  }
+
+  static int levelToInt(Levels level) {
+    switch (level) {
+      case Levels.language:
+        return 0;
+      case Levels.course:
+        return 1;
+      case Levels.school:
+        return 2;
+      case Levels.university:
+        return 3;
+      case Levels.master:
+        return 4;
+      case Levels.phd:
+        return 5;
+      default:
+        return 1;
+    }
+  }
+
+  static Levels fromInt(int level) {
+    switch (level) {
+      case 0:
+        return Levels.language;
+      case 1:
+        return Levels.course;
+      case 2:
+        return Levels.school;
+      case 3:
+        return Levels.university;
+      case 4:
+        return Levels.master;
+      case 5:
+        return Levels.phd;
       default:
         return Levels.course;
     }
@@ -189,7 +235,7 @@ enum Fields {
 }
 
 class Field {
-  String fieldToString(Fields field) {
+  static String fieldToString(Fields field) {
     switch (field) {
       case Fields.science:
         return 'Science';
@@ -222,7 +268,7 @@ class Field {
     }
   }
 
-  Fields fromString(String string) {
+  static Fields fromString(String string) {
     switch (string) {
       case 'Science':
         return Fields.science;

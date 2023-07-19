@@ -21,6 +21,10 @@ class LoadVidaDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: Colors.transparent,
       content: WhiteContainer(
+        padding: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 15,
+        ),
         alignment: Alignment.center,
         borderRadius: 30,
         width: width - padding * 2,
@@ -42,7 +46,7 @@ class LoadVidaDialog extends StatelessWidget {
                             vertical: 5,
                             horizontal: 0,
                           ),
-                          child: VidaSlotWidget(
+                          child: VidaSlotCard(
                             vida: snapshot.data![index],
                           ),
                         );
@@ -63,10 +67,10 @@ class LoadVidaDialog extends StatelessWidget {
   }
 }
 
-class VidaSlotWidget extends StatelessWidget {
+class VidaSlotCard extends StatelessWidget {
   final VidaSavingSlot vida;
 
-  const VidaSlotWidget({super.key, required this.vida});
+  const VidaSlotCard({super.key, required this.vida});
 
   @override
   Widget build(BuildContext context) {
@@ -98,10 +102,6 @@ class VidaSlotWidget extends StatelessWidget {
             top: 10,
             bottom: 10,
           ),
-          // decoration: BoxDecoration(
-          //   borderRadius: BorderRadius.circular(10),
-          //   // color: Theme.of(context).colorScheme.primaryContainer,
-          // ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

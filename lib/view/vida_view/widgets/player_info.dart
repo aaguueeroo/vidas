@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../components/light_container.dart';
 import '../vida_controller.dart';
 
 class PlayerInfo extends StatelessWidget {
   final String fullName;
-  final int age;
+  final String age;
   final String title;
 
   const PlayerInfo({
@@ -71,7 +72,7 @@ class PlayerInfo extends StatelessWidget {
 
               //Player age
               Text(
-                age.toString() + ' years old',
+                age + ' years old',
                 textAlign: TextAlign.start,
                 style: textStyle,
               ),

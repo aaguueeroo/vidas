@@ -1,10 +1,11 @@
 import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
-import 'package:unavida/DAL/education_repository_dao.dart';
-import 'package:unavida/DAL/vida_education_dao.dart';
+import 'package:unavida/DAL/courses_dao.dart';
+import 'package:unavida/DAL/vida_course_dao.dart';
 import 'package:unavida/DAL/vidas_dao.dart';
 import 'package:unavida/model/vida.dart';
 import 'package:unavida/model/vida_saving_slot.dart';
@@ -19,8 +20,8 @@ class DatabaseProvider {
   static const int _databaseVersion = 1;
   late DatabaseHelper databaseHelper;
   late VidasDao vidasDao;
-  late VidaEducationDao vidaEducationDao;
-  late EducationRepositoryDao educationRepositoryDao;
+  late VidaCourseDao vidaEducationDao;
+  late CoursesDao educationRepositoryDao;
   static Database? _database;
 
   DatabaseProvider._() {
@@ -30,10 +31,8 @@ class DatabaseProvider {
   _initialize() async {
     databaseHelper = DatabaseHelper(await database);
     vidasDao = VidasDao(await database);
-    vidaEducationDao =
-        VidaEducationDao(await database);
-    educationRepositoryDao =
-        EducationRepositoryDao(await database);
+    vidaEducationDao = VidaCourseDao(await database);
+    educationRepositoryDao = CoursesDao(await database);
   }
 
   /// Returns the [_database] instance or creates a new one if it doesn't exist.
@@ -113,32 +112,43 @@ class DatabaseProvider {
   /// inserts the game data in the database.
   Future<void> saveGame(Vida vida) async {
     if (vida.id == null) {
-      //Store the game for the first time
-
-
-
-      await vidasDao.createRow(vida.toSlot().toMap());
-
-      // Other tables
-      for (int i = 0; i < vida.education.length; i++) {
-        await vidaEducationDao.createRow(vida.education[i].toMap());
-      }
+      _saveNewGame(vida);
     } else {
-      //Updates a stored game
-      await vidasDao.updateRow(vida.id!, vida.toSlot().toMap());
+      _saveExistingGame(vida);
+    }
+  }
 
-      if (vida.education.length > 0){
-        for (int i = 0; i < vida.education.length; i++) {
-          if (vida.education[i].id == null) {
-            await vidaEducationDao.createRow(vida.education[i].toMap());
-          } else {
-            await vidaEducationDao.updateRow(
-                vida.education[i].id!, vida.education[i].toMap());
-          }
+  Future<void> _saveNewGame(Vida vida) async {
+    await vidasDao.createRow(vida.toSlot().toMap());
+
+    if (vida.educationList.isNotEmpty) {
+      for (int i = 0; i < vida.educationList.length; i++) {
+        _saveNewEducation(vida.educationList[i], vida.id!);
+        print(vida.educationList[i].id);
+      }
+    }
+  }
+
+  Future<void> _saveExistingGame(Vida vida) async {
+    await vidasDao.updateRow(vida.id!, vida.toSlot().toMap());
+
+    if (vida.educationList.isNotEmpty) {
+      for (int i = 0; i < vida.educationList.length; i++) {
+        if (vida.educationList[i].id == null) {
+          _saveNewEducation(vida.educationList[i], vida.id!);
+        } else {
+          _saveExistingEducation(vida.educationList[i], vida.id!);
         }
       }
     }
-    print('Game saved');
+  }
+
+  Future<void> _saveNewEducation(Education education, int vidaId) async {
+    await vidaEducationDao.createRow(education.toMap(vidaId));
+  }
+
+  Future<void> _saveExistingEducation(Education education, int vidaId) async {
+    await vidaEducationDao.updateRow(education.id!, education.toMap(vidaId));
   }
 
   Future<int?> getLatestId() async {
@@ -146,7 +156,6 @@ class DatabaseProvider {
     if (result != null && result.isNotEmpty) {
       final lastId = result.first.values.first;
       if (lastId is int) {
-        print('Last inserted row ID: $lastId');
         return lastId;
       }
     }
@@ -170,7 +179,11 @@ class DatabaseProvider {
   }
 
   Future<void> deleteGame(VidaSavingSlot slot) async {
+    //Delete main info from 'vidas' table
     await vidasDao.deleteOneRow(slot.id!);
+
+    //Delete rows in every other table that is a joisn with 'vidas'
+    await vidaEducationDao.deleteRowByVidaId(slot.id!);
 
     print('Game deleted');
   }

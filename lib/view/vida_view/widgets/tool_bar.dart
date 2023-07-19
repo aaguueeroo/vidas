@@ -25,12 +25,26 @@ class ToolBar extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            //Debug button
+            IconButton(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              constraints: const BoxConstraints(),
+              icon: const Icon(
+                Icons.bug_report,
+                size: 30,
+              ),
+              color: Theme.of(context).colorScheme.onSecondary,
+              onPressed: () => controller.showDebugView(context),
+            ),
 
             //Store button
             IconButton(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               constraints: const BoxConstraints(),
-              icon: const Icon(Icons.store, size: 30,),
+              icon: const Icon(
+                Icons.store,
+                size: 30,
+              ),
               color: Theme.of(context).colorScheme.onSecondary,
               onPressed: () {},
             ),
@@ -39,9 +53,12 @@ class ToolBar extends StatelessWidget {
             IconButton(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               constraints: const BoxConstraints(),
-              icon: const Icon(Icons.settings_outlined, size: 30,),
+              icon: const Icon(
+                Icons.save_as,
+                size: 30,
+              ),
               color: Theme.of(context).colorScheme.onSecondary,
-              onPressed: () => controller.openOptions(context),
+              onPressed: () => controller.showOptionsView(context),
             ),
           ],
         ),

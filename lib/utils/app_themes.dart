@@ -24,7 +24,7 @@ class AppThemes {
     fontSize: 16,
     fontWeight: FontWeight.normal,
     letterSpacing: 0.15,
-    color: Colors.black,
+    color: Color(0xFF2D1F55),
   );
 
   final ThemeData aestheticTheme = ThemeData(
@@ -78,6 +78,11 @@ class AppThemes {
         color: _aestheticColors['onBackground']!,
       ),
       //input decoration theme
+      titleLarge: _aestheticTextStyle.copyWith(
+        fontSize: 25,
+        fontWeight: FontWeight.bold,
+        color: _aestheticColors['onBackground']!,
+      ),
       titleMedium: _aestheticTextStyle.copyWith(
         fontSize: 20,
         fontWeight: FontWeight.normal,

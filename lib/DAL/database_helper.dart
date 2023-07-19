@@ -87,23 +87,23 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>?> joinEducationVidaWithEducation(int id) async {
     const sql = '''
       SELECT 
-        vida_education.id, 
-        vida_education.education_id, 
-        education_repository.name, 
-        education_repository.price, 
-        education_repository.field, 
-        education_repository.level, 
-        education_repository.institution, 
-        education_repository.totalYears, 
-        vida_education.current_year, 
-        vida_education.extra_years, 
-        vida_education.grade, 
-        vida_education.finished, 
-        vida_education.abandoned, 
-        vida_education.kicked_out
-      FROM vida_education
-      JOIN education_repository ON vida_education.education_id = education_repository.id
-      WHERE vida_education.vida_id = ?;
+        vida_coursez.id, 
+        vida_coursez.education_id, 
+        courses.name, 
+        courses.price, 
+        courses.field, 
+        courses.level, 
+        courses.institution, 
+        courses.totalYears, 
+        vida_course.current_year, 
+        vida_course.extra_years, 
+        vida_course.grade, 
+        vida_course.finished, 
+        vida_course.abandoned, 
+        vida_course.kicked_out
+      FROM vida_course
+      JOIN courses ON vida_course.education_id = courses.id
+      WHERE vida_course.vida_id = ?;
     ''';
 
     return await _database.rawQuery(sql, [id]);
